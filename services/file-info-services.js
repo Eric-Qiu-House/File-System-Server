@@ -1,17 +1,28 @@
 const ImgInfoMod = require('../models/file-info-model');
-
+const sequelizePaginate = require('sequelize-paginate');
+sequelizePaginate.paginate(ImgInfoMod);
 //全部
 async function findTable() {
   try {
-    const data = await ImgInfoMod.findAll(
-      // {
-        //   attributes: ['id_', 'file_name_', 'file_path_', 'release_time_', 'release_name_', 'status_', 'update_time_', 'updater_']
-      // }
-    );
+
+    const options = {
+      page: 1, // 当前页码
+      paginate: 20 , // 每页显示的条目数
+      // where: {}, // 查询条件
+      // order: [['file_id_','DESC']], // 排序方式
+      // logging: console.log // 启用日志记录以查看生成的 SQL 查询
+    };
+    const data = await ImgInfoMod.paginate(options)
+
+    // const data = await ImgInfoMod.findAll(
+    //   // {
+    //     //   attributes: ['id_', 'file_name_', 'file_path_', 'release_time_', 'release_name_', 'status_', 'update_time_', 'updater_']
+    //   // }
+    // );
     if (data.length > 0) {
       return data;
     } else {
-      console.log('No users found');
+      console.log('No found');
       return [];
     }
   } catch (error) {
@@ -58,3 +69,11 @@ module.exports = {
   // updateNewsStatus,
   // create
 }
+
+/**
+ * 获取文件信息的分页数据
+ * @param {number} page - 当前页码，默认1
+ * @param {number} pageSize - 每页显示的条目数，默认10
+ * @param {Object} filters - 查询条件对象（可选）
+ * @returns {Object} - 包含分页数据的对象
+ */

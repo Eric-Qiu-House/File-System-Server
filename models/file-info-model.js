@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const sequelizePaginate = require('sequelize-paginate');
 
 class FileInfoMod extends Model { }
 
@@ -38,8 +39,11 @@ FileInfoMod.init( {
 }, {
   sequelize,  //指定连接的数据库实例
   tableName: 'files_info',    //表名称
-  modelName: 'ImgInfoMod',  //模型的名称
+  modelName: 'FileInfoMod',  //模型的名称
   timestamps: false // 禁用 Sequelize 自动生成的 createdAt 和 updatedAt 字段
 });
+
+// 应用分页插件
+sequelizePaginate.paginate(FileInfoMod);
 
 module.exports = FileInfoMod;

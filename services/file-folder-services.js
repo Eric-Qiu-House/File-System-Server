@@ -11,7 +11,7 @@ async function findTable() {
     if (data.length > 0) {
       return data;
     } else {
-      console.log('No users found');
+      console.log('No found');
       return [];
     }
   } catch (error) {
